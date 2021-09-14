@@ -42,14 +42,14 @@ class FooEnv(gym.Env):
         
         #costs = angle_normalize(th) ** 2 + 0.1 * thdot ** 2 + 0.001 * (u ** 2)
 		
-        PE = m * g * l * np.cos(angle_normalize(th))
-        KE = 0.5 * m * l**2 * thdot**2 
+        PE = (1/2) * m * g * l * np.cos(th)
+        KE = (1/6) * m * l**2 * thdot**2 
         
         costs = KE - PE + 0.001 * (u**2)
         
         newthdot = (
             thdot
-            + (-3 * g / (2 * l) * np.sin(th + np.pi) + 3.0 / (m * l ** 2) * u) * dt
+            + (-3 * g / (2 * l) * np.sin(-np.pi + th) + 3.0 / (m * l ** 2) * u) * dt
         )
         
         newth = th + newthdot * dt
